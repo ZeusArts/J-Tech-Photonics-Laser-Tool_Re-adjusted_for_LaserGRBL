@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300mm" height="300mm" viewBox="0 0 1133.8583 1133.8583" xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+  <!-- Layer 1: Engrave Layer (circles and rounded rectangles) -->
+  <g id="engrave" inkscape:groupmode="layer" inkscape:label="Engrave Layer">
+    <!-- Circle at (50mm, 50mm) radius 20mm -->
+    <circle cx="238.979" cy="238.979" r="75.591" fill="none" stroke="black" stroke-width="1"/>
+    <!-- Rounded rectangle at (100mm, 100mm) size 80x60mm, radius 10mm -->
+    <rect x="427.717" y="427.717" width="302.362" height="226.772" rx="37.795" ry="37.795" fill="none" stroke="blue" stroke-width="1"/>
+  </g>
+  
+  <!-- Layer 2: Cut Layer (outer frame) -->
+  <g id="cut" inkscape:groupmode="layer" inkscape:label="Cut Layer">
+    <!-- Outer frame rectangle 250x250mm at (25mm, 25mm) -->
+    <rect x="94.488" y="94.488" width="944.882" height="944.882" fill="none" stroke="red" stroke-width="1"/>
+  </g>
+  
+  <!-- Layer 3: Hidden Guide Layer (display:none) -->
+  <g id="guides" inkscape:groupmode="layer" inkscape:label="Guides" style="display:none">
+    <!-- Center crosshair guides -->
+    <line x1="0" y1="566.929" x2="1133.858" y2="566.929" stroke="gray" stroke-dasharray="5,5" stroke-width="0.5"/>
+    <line x1="566.929" y1="0" x2="566.929" y2="1133.858" stroke="gray" stroke-dasharray="5,5" stroke-width="0.5"/>
+    <!-- Text label (should trigger unconverted_text_count) -->
+    <text x="500" y="500" font-size="20" fill="gray">Guide Layer (Hidden)</text>
+  </g>
+  
+  <!-- Debug layers (should be excluded) -->
+  <g id="debug_traces" inkscape:groupmode="layer" inkscape:label="debug traces">
+    <path d="M 0 0 L 100 100" stroke="red"/>
+  </g>
+  <g id="debug_references" inkscape:groupmode="layer" inkscape:label="debug references">
+    <path d="M 0 0 L 100 100" stroke="blue"/>
+  </g>
+</svg>
