@@ -26,10 +26,10 @@ def generate_custom_interface(laser_off_command, laser_power_command):
             super().__init__()
 
         def laser_off(self):
-            return laser_off_command.replace(r'\n', '\n')
+            return f"{laser_off_command}"
 
         def set_laser_power(self, _):
-            return laser_power_command.replace(r'\n', '\n')
+            return f"{laser_power_command}"
 
     return CustomInterface
 
@@ -114,6 +114,9 @@ class GcodeExtension(EffectExtension):
                                   self.options.pass_depth, dwell_time=self.options.dwell_time, custom_header=header,
                                   custom_footer=footer, unit=self.options.unit)
 
+        uu_per_unit = self.svg.unittouu(f"1{self.options.unit}")
+        unit_per_uu = 1.0 / uu_per_unit
+
         transformation = Transformation()
 
         transformation.add_translation(self.options.horizontal_offset, self.options.vertical_offset)
@@ -123,6 +126,8 @@ class GcodeExtension(EffectExtension):
             transformation.add_translation(-self.options.bed_width / 2, self.options.bed_height / 2)
         elif self.options.machine_origin == "top-left":
             transformation.add_translation(0, self.options.bed_height)
+
+        transformation.add_scale(unit_per_uu)
 
         self.clear_debug()
         curves = parse_root(root, transform_origin=not self.options.invert_y_axis, root_transformation=transformation,
@@ -146,6 +151,8 @@ class GcodeExtension(EffectExtension):
         origin = self.options.machine_origin
         bed_width = self.options.bed_width
         bed_height = self.options.bed_height
+        uu_per_unit = self.svg.unittouu(f"1{self.options.unit}")
+        stroke_width_uu = self.svg.unittouu(f"{self.options.debug_line_width}px")
 
         group = etree.Element("{%s}g" % svg_name_space)
         group.set("id", "debug_traces")
@@ -159,6 +166,7 @@ class GcodeExtension(EffectExtension):
             approximation = LineSegmentChain.line_segment_approximation(curve)
 
             change_origin = Transformation()
+            change_origin.add_scale(uu_per_unit)
 
             if not self.options.invert_y_axis:
                 change_origin.add_scale(1, -1)
@@ -169,7 +177,7 @@ class GcodeExtension(EffectExtension):
 
             path_string = xml_tree.tostring(
                 debug_methods.to_svg_path(approximation, color="red", opacity="0.5",
-                                          stroke_width=f"{self.options.debug_line_width}px",
+                                          stroke_width=str(stroke_width_uu),
                                           transformation=change_origin, draw_arrows=True)
             )
 
@@ -184,13 +192,17 @@ class GcodeExtension(EffectExtension):
         origin = self.options.machine_origin
         bed_width = self.options.bed_width
         bed_height = self.options.bed_height
+        uu_per_unit = self.svg.unittouu(f"1{unit}")
+        px_to_uu = self.svg.unittouu("1px")
+        svg_bed_width = bed_width * uu_per_unit
+        svg_bed_height = bed_height * uu_per_unit
 
         group = etree.Element("{%s}g" % svg_name_space)
         group.set("id", "debug_references")
         group.set("{%s}groupmode" % inkscape_name_space, "layer")
         group.set("{%s}label" % inkscape_name_space, "debug reference points")
 
-        reference_points_svg = [(0, 0), (0, bed_height), (bed_width, 0), (bed_width, bed_height)]
+        reference_points_svg = [(0, 0), (0, svg_bed_height), (svg_bed_width, 0), (svg_bed_width, svg_bed_height)]
         reference_points_gcode = {
             "bottom-left": [(0, bed_height), (0, 0), (bed_width, bed_height), (bed_width, 0)],
             "top-left": [(0, 0), (0, bed_height), (bed_width, 0), (bed_width, bed_height)],
@@ -201,8 +213,8 @@ class GcodeExtension(EffectExtension):
         for i, (x, y) in enumerate(reference_points_svg):
             reference_point = etree.Element("{%s}g" % svg_name_space)
 
-            stroke_width = 2
-            size = 7
+            stroke_width = 2 * px_to_uu
+            size = 7 * px_to_uu
 
             x_direction = -1 if x > 0 else 1
             plus_sign = etree.Element("{%s}g" % svg_name_space)
@@ -226,9 +238,9 @@ class GcodeExtension(EffectExtension):
             reference_point.append(plus_sign)
 
             text_box = etree.Element("{%s}text" % svg_name_space)
-            text_box.set("x", str(x - 28))
-            text_box.set("y", str(y - (y <= 0) * 6 + (y > 0) * 9))
-            text_box.set("font-size", "6")
+            text_box.set("x", str(x - 28 * px_to_uu))
+            text_box.set("y", str(y - (y <= 0) * 6 * px_to_uu + (y > 0) * 9 * px_to_uu))
+            text_box.set("font-size", str(6 * px_to_uu))
             text_box.text = f"{reference_points_gcode[i][0]}{unit}, {reference_points_gcode[i][1]}{unit}"
             reference_point.append(text_box)
 
