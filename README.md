@@ -1,10 +1,10 @@
-# MULTI-LAYER MODIFIED VERSION (Add new GUI for Multi Layers Settings separated for Engraving / Cutting / Other Custom Settings) Ver 1.0
+# MULTI-LAYER MODIFIED VERSION (Add new GUI for Multi Layers Settings separated for Cutting / Other Custom Settings (Not possible Engraving functions) Ver 1.0
 (マルチレイヤー設定可能改良バージョン)
 
 <img src="./images/Multilayer_setting01.png" alt="Multilayer_setting01.png" width="600" />
 #Add new function:Multilayers Settings for Export to Gcode files
 
-This is added new gui for separated layers settings for engraving, cut, and othrs custom settings and export separated layers for separated Gcodes files, for add new file on LaserGRBL for process layers sequence work. 
+This is added new gui for separated layers settings for cut and othrs custom settings and export separated layers for separated Gcodes files, for add new file on LaserGRBL for process layers sequence work. 
 
 <img src="./images/Multilayer_setting_GUI_02.png" alt="Multilayer_setting_GUI_02.png" width="600" />
 
