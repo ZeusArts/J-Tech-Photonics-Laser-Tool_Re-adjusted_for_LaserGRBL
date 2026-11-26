@@ -17,6 +17,8 @@
             <param name="directory" type="path" gui-text="Output Directory" mode="folder">-- Choose Output Directory --</param>
             <param name="filename" type="string" gui-text="Filename">output.gcode</param>
             <param name="filename_suffix" type="bool" gui-text="Add Numeric Suffix to Filename">true</param>
+            <spacer/>
+            <param name="use_layer_gui" type="bool" gui-text="Use Multi-Layer GUI">true</param>
         </page>
         <page name="advanced_settings" gui-text="Advanced Settings">
             <param name="tool_power_command" type="string" gui-text="Tool Power Command">M3 S255;</param>
@@ -58,7 +60,7 @@
         </page>
     </param>
     <effect>
-        <object-type>path</object-type>
+        <object-type>all</object-type>
         <effects-menu>
             <submenu name="Generate Laser Gcode"/>
         </effects-menu>
