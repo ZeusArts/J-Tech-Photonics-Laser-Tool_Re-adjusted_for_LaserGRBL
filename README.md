@@ -1,3 +1,6 @@
+# MULTI-LAYER MODIFIED VERSION (Add new GUI for Multi Layers Settings separated for Engraving / Cutting / Other Custom Settings) Ver 1.0
+(マルチレイヤー設定可能改良バージョン)
+
 # J Tech Photonics Laser Tool (Community version)
 This Inkscape extension generates gcode for laser cutters and plotting machines from an SVG file.
 
