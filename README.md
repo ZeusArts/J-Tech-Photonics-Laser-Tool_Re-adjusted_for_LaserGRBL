@@ -1,5 +1,8 @@
 # MULTI-LAYER MODIFIED VERSION (Add new GUI for Multi Layers Settings separated for Engraving / Cutting / Other Custom Settings) Ver 1.0
 (マルチレイヤー設定可能改良バージョン)
+<img src="./images/.png" alt="Multilayer_setting01.png" width="600" />
+This is added new gui for separated layers settings for engraving, cut, and othrs custom settings and export separated layers for separated Gcodes files, for add new file on LaserGRBL for process layers sequence work. 
+<img src="./images/Multilayer_setting_GUI_02.png" alt="important_settings.png" width="600" />
 
 # J Tech Photonics Laser Tool (Community version)
 This Inkscape extension generates gcode for laser cutters and plotting machines from an SVG file.
